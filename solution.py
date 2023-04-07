@@ -11,11 +11,8 @@ def solution(p: float, x: np.array) -> tuple:
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
     n = len(x)
-    s2 = np.mean(x**2)  
     alpha = 1 - p
-    sigma_hat = np.sqrt(s2 / 14)  
-    chi2_left = chi2.ppf(alpha/2, n-1)
-    chi2_right = chi2.ppf(1 - alpha/2, n-1)
-    left_bound = np.sqrt((n-1)*sigma_hat**2 / chi2_right)
-    right_bound = np.sqrt((n-1)*sigma_hat**2 / chi2_left)
+    
+    left_bound = np.sqrt(n * (x ** 2).mean() / (14 * chi2.ppf(q=1 - alpha / 2, df=2 * n)))
+    right_bound = np.sqrt(n * (x ** 2).mean() / (14 * chi2.ppf(q=alpha / 2, df=2 * n)))
     return (left_bound, right_bound)
